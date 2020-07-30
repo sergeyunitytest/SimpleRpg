@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Kvest
   - Enimi
+  - Key
   layers:
   - Default
   - TransparentFX

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class KvestController : MonoBehaviour
 {
-    
+    public GameObject NextKvest;
 
     public Transform Hero;
     public int Gold;
@@ -18,7 +18,7 @@ public class KvestController : MonoBehaviour
     public Image HeroImage;
     public Text HeroText;
     public Text DialogText;
-    private int DialogNumber = 0;
+    public int DialogNumber = 0;
     public int KvestId;
     //public Text Kvests;
     public string KvestStrings;
@@ -53,6 +53,7 @@ public class KvestController : MonoBehaviour
             {
                 if (kvest.KvestId == KvestId)
                 {
+                    Debug.Log("1");
                     CatFind = true;
                     /*Destroy(kvest.ListElement);
                     KvestStrings.Remove(kvest);*/
@@ -62,11 +63,15 @@ public class KvestController : MonoBehaviour
             {
                 DialogPanel.SetActive(false);
                 kvests.ExitKvest(KvestId, KvestStrings);
+                Debug.Log("2");
+                NextKvest.SetActive(true);
+                gameObject.SetActive(false);
             }
             else
             {
                 DialogPanel.SetActive(true);
                 DialogText.text = Dialog[DialogNumber];
+                Debug.Log("3");
             }
         }
     }
