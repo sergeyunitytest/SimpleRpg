@@ -6,9 +6,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.ComponentModel;
+using System.Security.Cryptography;
 
 public class PlayerController : MonoBehaviour
 {
+    private DBSingleton db;
+    private Vector3 StartPosition;
+    public GameObject DeadPanel;
     public Text GoldText;
     private float TimeRegen = 1f;
     private float RegenK = 0.01f;
@@ -38,8 +42,21 @@ public class PlayerController : MonoBehaviour
     public float speed = 2.5f;
     private void Start()
     {
+        db = DBSingleton.getInstance();
+        Lvl = db.data.lvl;
+        Exp = db.data.exp;
+        Gold = db.data.gold;
+        HP = db.data.hp;
+        Mana = db.data.mana;
+        MaxHP = LvlK * Lvl * 500;
+        MaxMana = LvlK * Lvl * 500;
+        StartPosition = new Vector3(db.data.x, db.data.y, 0f);
+        transform.position = new Vector3(db.data.x, db.data.y, 0f);
+        DeadPanel.SetActive(false);
+        GoldText.text = "" + Gold;
         LvlText.text = "Lvl:" + Lvl;
-        ExpText.text = Exp + "/" + StartLvlExp * Lvl * LvlK;
+        ExpText.text = Exp + "/" + StartLvlExp * Lvl * Lvl;
+        //Debug.Log();
         HpText.text = HP + "/" + MaxHP;
         ManaText.text = Mana + "/" + MaxMana;
         HPBar.fillAmount = HP / MaxHP;
@@ -51,76 +68,79 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(HP < MaxHP || Mana < MaxMana)
-        TimeRegen -= Time.fixedDeltaTime;
-        if (TimeRegen <= 0f)
+        if(HP > 0)
         {
-            TimeRegen = 1f;
-            if(HP + MaxHP * RegenK >= MaxHP)
+            if (HP < MaxHP || Mana < MaxMana)
+                TimeRegen -= Time.fixedDeltaTime;
+            if (TimeRegen <= 0f)
             {
-                HP = MaxHP;
-            }
-            else
-            {
-                HP += MaxHP * RegenK;
-            }
-            if (Mana + MaxMana * RegenK >= MaxMana)
-            {
-                Mana = MaxMana;
-            }
-            else
-            {
-                Mana += MaxMana * RegenK;
-            }
-            HpText.text = HP + "/" + MaxHP;
-            HPBar.fillAmount = HP / MaxHP;
-            ManaText.text = Mana + "/" + MaxMana;
-            ManaBar.fillAmount = Mana / MaxMana;
+                TimeRegen = 1f;
+                if (HP + MaxHP * RegenK >= MaxHP)
+                {
+                    HP = MaxHP;
+                }
+                else
+                {
+                    HP += MaxHP * RegenK;
+                }
+                if (Mana + MaxMana * RegenK >= MaxMana)
+                {
+                    Mana = MaxMana;
+                }
+                else
+                {
+                    Mana += MaxMana * RegenK;
+                }
+                HpText.text = HP + "/" + MaxHP;
+                HPBar.fillAmount = HP / MaxHP;
+                ManaText.text = Mana + "/" + MaxMana;
+                ManaBar.fillAmount = Mana / MaxMana;
 
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            if (lastanim != "Run")
-            {
-                Mac.Run();
-                lastanim = "Run";
             }
-            MyMoveController.MoveTop(rb, sr, speed, transform, Time.fixedDeltaTime);
-            //rb.MovePosition(transform.position + top * Time.fixedDelTaime);
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            if (lastanim != "Run")
+            if (Input.GetKey(KeyCode.W))
             {
-                Mac.Run();
-                lastanim = "Run";
+                if (lastanim != "Run")
+                {
+                    Mac.Run();
+                    lastanim = "Run";
+                }
+                MyMoveController.MoveTop(rb, sr, speed, transform, Time.fixedDeltaTime);
+                //rb.MovePosition(transform.position + top * Time.fixedDelTaime);
             }
-            MyMoveController.MoveBottom(rb, sr, -speed, transform, Time.fixedDeltaTime);
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            if (lastanim != "Run")
+            else if (Input.GetKey(KeyCode.S))
             {
-                Mac.Run();
-                lastanim = "Run";
+                if (lastanim != "Run")
+                {
+                    Mac.Run();
+                    lastanim = "Run";
+                }
+                MyMoveController.MoveBottom(rb, sr, -speed, transform, Time.fixedDeltaTime);
             }
-            MyMoveController.MoveLeft(rb, sr, -speed, transform, Time.fixedDeltaTime);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            if (lastanim != "Run")
+            else if (Input.GetKey(KeyCode.A))
             {
-                Mac.Run();
-                lastanim = "Run";
+                if (lastanim != "Run")
+                {
+                    Mac.Run();
+                    lastanim = "Run";
+                }
+                MyMoveController.MoveLeft(rb, sr, -speed, transform, Time.fixedDeltaTime);
             }
-            MyMoveController.MoveRight(rb, sr, speed, transform, Time.fixedDeltaTime);
-        }
-        else
-        {
-            if (lastanim != "Idle")
+            else if (Input.GetKey(KeyCode.D))
             {
-                Mac.Idle();
-                lastanim = "Idle";
+                if (lastanim != "Run")
+                {
+                    Mac.Run();
+                    lastanim = "Run";
+                }
+                MyMoveController.MoveRight(rb, sr, speed, transform, Time.fixedDeltaTime);
+            }
+            else
+            {
+                if (lastanim != "Idle")
+                {
+                    Mac.Idle();
+                    lastanim = "Idle";
+                }
             }
         }
     }
@@ -154,42 +174,44 @@ public class PlayerController : MonoBehaviour
     }
     public void SkillActivate(int number)
     {
-        Debug.Log("Skill1" + number);
-        if (number == 1)
+        if(HP > 0)
         {
-            Mac.Attack1();
-            Mana -= 20;
-            ManaText.text = Mana + "/" + MaxMana;
-            ManaBar.fillAmount = Mana / MaxMana;
-            //OnDamage.Invoke();
-            EnemyDamageCreate(20);
-        }
-        if (number == 2)
-        {
-            Mac.Attack2();
-            Mana -= 20;
-            ManaText.text = Mana + "/" + MaxMana;
-            ManaBar.fillAmount = Mana / MaxMana;
-            //OnDamage.Invoke();
-            EnemyDamageCreate(25);
-        }
-        if (number == 3)
-        {
-            Mac.Attack3();
-            Mana -= 25;
-            ManaText.text = Mana + "/" + MaxMana;
-            ManaBar.fillAmount = Mana / MaxMana;
-            //OnDamage.Invoke();
-            EnemyDamageCreate(30);
-        }
-        if (number == 4)
-        {
-            Mac.Attack4();
-            Mana -= 35;
-            ManaText.text = Mana + "/" + MaxMana;
-            ManaBar.fillAmount = Mana / MaxMana;
-            //OnDamage.Invoke();
-            EnemyDamageCreate(45);
+            if (number == 1)
+            {
+                Mac.Attack1();
+                Mana -= 20;
+                ManaText.text = Mana + "/" + MaxMana;
+                ManaBar.fillAmount = Mana / MaxMana;
+                //OnDamage.Invoke();
+                EnemyDamageCreate(20);
+            }
+            if (number == 2)
+            {
+                Mac.Attack2();
+                Mana -= 20;
+                ManaText.text = Mana + "/" + MaxMana;
+                ManaBar.fillAmount = Mana / MaxMana;
+                //OnDamage.Invoke();
+                EnemyDamageCreate(25);
+            }
+            if (number == 3)
+            {
+                Mac.Attack3();
+                Mana -= 25;
+                ManaText.text = Mana + "/" + MaxMana;
+                ManaBar.fillAmount = Mana / MaxMana;
+                //OnDamage.Invoke();
+                EnemyDamageCreate(30);
+            }
+            if (number == 4)
+            {
+                Mac.Attack4();
+                Mana -= 35;
+                ManaText.text = Mana + "/" + MaxMana;
+                ManaBar.fillAmount = Mana / MaxMana;
+                //OnDamage.Invoke();
+                EnemyDamageCreate(45);
+            }
         }
     }
     private void EnemyDamageCreate(int damage)
@@ -218,9 +240,9 @@ public class PlayerController : MonoBehaviour
         {
             Lvl++;
             Exp = 0;
-            MaxHP *= LvlK;
+            MaxHP = LvlK * Lvl * 500;
+            MaxMana = LvlK * Lvl * 500;
             HP = MaxHP;
-            MaxMana *= LvlK;
             Mana = MaxMana;
             HpText.text = HP + "/" + MaxHP;
             HPBar.fillAmount = HP / MaxHP;
@@ -231,6 +253,15 @@ public class PlayerController : MonoBehaviour
         ExpText.text = Exp + "/" + StartLvlExp * Lvl * Lvl;
         GoldText.text = Gold + "";
     }
+    public void Health(float hp, float mp)
+    {
+        HP += hp*HP;
+        Mana += mp*Mana;
+        HpText.text = HP + "/" + MaxHP;
+        ManaText.text = Mana + "/" + MaxMana;
+        HPBar.fillAmount = HP / MaxHP;
+        ManaBar.fillAmount = Mana / MaxMana;
+    }
     public void getDps(float Dps, GameObject Enimi)
     {
         GameObject FindEnimi = EnimiGameObject.Find(item => item.GetInstanceID() == Enimi.GetInstanceID());
@@ -240,8 +271,29 @@ public class PlayerController : MonoBehaviour
             EnimiCon.Add(Enimi.GetComponent<EnimiControler>());
         }
         HP -= Dps;
+        if (HP < 1)
+        {
+            DeadPanel.SetActive(true);
+        }
         HpText.text = HP + "/" + MaxHP;
         HPBar.fillAmount = HP / MaxHP;
+    }
+    public void RestartGame()
+    {
+        transform.position = StartPosition;
+        DeadPanel.SetActive(false);
+        if(Lvl - 1 > 0)Lvl -= 1;
+        Exp = 0;
+        MaxHP *= LvlK;
+        HP = MaxHP;
+        MaxMana *= LvlK;
+        Mana = MaxMana;
+        LvlText.text = "Lvl:" + Lvl;
+        ExpText.text = Exp + "/" + StartLvlExp * Lvl * LvlK;
+        HpText.text = HP + "/" + MaxHP;
+        ManaText.text = Mana + "/" + MaxMana;
+        HPBar.fillAmount = HP / MaxHP;
+        ManaBar.fillAmount = Mana / MaxMana;
     }
     public void UpdateList(GameObject Enimi)
     {
@@ -253,6 +305,17 @@ public class PlayerController : MonoBehaviour
                 EnimiCon.RemoveAt(i);
             }
         }
+    }
+    private void OnApplicationQuit()
+    {
+        db.data.lvl = Lvl;
+        db.data.exp = Exp;
+        db.data.gold = Gold;
+        db.data.hp = HP;
+        db.data.mana = Mana;
+        db.data.x = transform.position.x;
+        db.data.y = transform.position.y;
+        DBSingleton.setInstance();
     }
 }
 

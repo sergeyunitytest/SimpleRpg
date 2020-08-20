@@ -37,6 +37,46 @@ public class ScilseController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            if (!is_Skill1_KD)
+            {
+                this_Skill1_KD = Skill1_KD;
+                is_Skill1_KD = true;
+                PC.SkillActivate(1);
+                //Debug.Log("Skill1");
+            }
+        }
+        if (Input.GetKey(KeyCode.Alpha2))
+        {
+            if (!is_Skill2_KD)
+            {
+                this_Skill2_KD = Skill2_KD;
+                is_Skill2_KD = true;
+                PC.SkillActivate(2);
+                //Debug.Log("Skill1");
+            }
+        }
+        if (Input.GetKey(KeyCode.Alpha3))
+        {
+            if (!is_Skill3_KD)
+            {
+                this_Skill3_KD = Skill3_KD;
+                is_Skill3_KD = true;
+                PC.SkillActivate(3);
+                //Debug.Log("Skill1");
+            }
+        }
+        if (Input.GetKey(KeyCode.Alpha4))
+        {
+            if (!is_Skill4_KD)
+            {
+                this_Skill4_KD = Skill4_KD;
+                is_Skill4_KD = true;
+                PC.SkillActivate(4);
+                //Debug.Log("Skill1");
+            }
+        }
         if (is_Skill1_KD)
         {
             this_Skill1_KD -= Time.deltaTime;
