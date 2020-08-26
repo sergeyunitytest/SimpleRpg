@@ -160,6 +160,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bde0f16872e01a4cac1c77911d2e230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Drop:
+  - id: 2
+    count: 3
+  - id: 3
+    count: 3
+  - id: 1
+    count: 4
   attackDamage: 100
   Exp: 350
   Gold: 35

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 /*using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -10,6 +11,7 @@ using UnityEngine.Events;
 
 public class EnimiControler : MonoBehaviour
 {
+    public List<DropItem> Drop = new List<DropItem>();
     public float attackDamage = 10f;
     public int Exp = 100;
     public int Gold = 10;
@@ -124,7 +126,7 @@ public class EnimiControler : MonoBehaviour
             ThisHp -= demage;
             if (ThisHp <= 0)
             {
-                PC.GetExpGold(Exp, Gold);
+                PC.GetExpGold(Exp, Gold, Drop);
                 PC.UpdateList(gameObject);
                 animp.Play("Dead", 0, 0.1f);
                 EF.FatherDestroy();

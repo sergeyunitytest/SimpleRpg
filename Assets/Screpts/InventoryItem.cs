@@ -30,6 +30,14 @@ public class InventoryItem : MonoBehaviour
         Logo.sprite = image;
 
     }
+    public void UpdateData(int Qu, int id)
+    {
+        ID = id;
+        Quantity = Qu;
+        count.text = Quantity + "";
+        Logo.sprite = image;
+
+    }
     public void BtnClick()
     {
         //Debug.Log()
@@ -45,7 +53,7 @@ public class InventoryItem : MonoBehaviour
         count.text = Quantity + "";
         if(Quantity<= 0)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

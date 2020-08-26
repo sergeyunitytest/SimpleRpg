@@ -1183,6 +1183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3123c9a0af0f99e4b9719d31ba4a985a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inv: {fileID: 792402070}
   DeadPanel: {fileID: 1882054962}
   GoldText: {fileID: 87560913}
   LvlText: {fileID: 1519055585}

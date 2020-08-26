@@ -35,7 +35,10 @@ public class Kvests : MonoBehaviour
         {
             if (kvest.KvestId == KvestId && !kvest.Compliter)
             {
-                PC.GetExpGold(kvest.Exp, kvest.Gold);
+                DropItem DI = new DropItem(2,2);
+                List<DropItem> drop = new List<DropItem>();
+                drop.Add(DI);
+                PC.GetExpGold(kvest.Exp, kvest.Gold, drop);
                 kvest.Compliter = true;
                 //Gold += kvest.Gold;
                 //GoldText.text = Gold + "";

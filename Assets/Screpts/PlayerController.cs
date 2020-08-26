@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 
 public class PlayerController : MonoBehaviour
 {
+    public Inventory inv;
     private DBSingleton db;
     private Vector3 StartPosition;
     public GameObject DeadPanel;
@@ -232,8 +233,9 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    public void GetExpGold(int expl, int gold)
+    public void GetExpGold(int expl, int gold, List<DropItem> drop)
     {
+        inv.UpdateData(drop);
         Exp += expl;
         Gold += gold;
         if(Exp >= StartLvlExp * Lvl * LvlK)
@@ -255,8 +257,22 @@ public class PlayerController : MonoBehaviour
     }
     public void Health(float hp, float mp)
     {
-        HP += hp*HP;
-        Mana += mp*Mana;
+        if(hp*HP + HP <= MaxHP)
+        {
+            HP += hp * HP;
+        }
+        else
+        {
+            HP = MaxHP;
+        }
+        if (mp * Mana + Mana <= MaxMana)
+        {
+            Mana += mp * Mana;
+        }
+        else
+        {
+            Mana = MaxMana;
+        }
         HpText.text = HP + "/" + MaxHP;
         ManaText.text = Mana + "/" + MaxMana;
         HPBar.fillAmount = HP / MaxHP;

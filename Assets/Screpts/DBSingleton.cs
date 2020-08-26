@@ -65,3 +65,14 @@ public class items
     public String link;
     public int count;
 }
+[Serializable]
+public class DropItem
+{
+    public int id; 
+    public int count;
+    public DropItem(int ID, int Count)
+    {
+        id = ID;
+        count = Count;
+    }
+}
