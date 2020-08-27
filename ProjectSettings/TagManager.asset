@@ -7,6 +7,7 @@ TagManager:
   - Kvest
   - Enimi
   - Key
+  - bomb
   layers:
   - Default
   - TransparentFX

@@ -49,5 +49,6 @@ public class Inventory : MonoBehaviour
         {
             II[i].UpdateData(ListItems[i].count, ListItems[i].id);
         }
+        DBSingleton.setInstance();
     }
 }
