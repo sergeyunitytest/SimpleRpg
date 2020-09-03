@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 /*using System.Collections.Generic;
@@ -117,6 +117,24 @@ public class EnimiControler : MonoBehaviour
             Attack = true;
             HeroTransform = col.gameObject.GetComponent<Transform>();
             Debug.Log("Рома");
+        }
+        if (col.tag == "bomb")
+        {
+            ThisHp -= 100;
+            if (ThisHp <= 0)
+            {
+                if (PC)
+                {
+                    PC.GetExpGold(Exp, Gold, Drop);
+                    PC.UpdateList(gameObject);
+                }
+                animp.Play("Dead", 0, 0.1f);
+                EF.FatherDestroy();
+            }
+            Vector3 HpVector = HpBar.localScale;
+            HpVector.x = ThisHp / MaxHp;
+            HpBar.localScale = HpVector;
+            Debug.Log(ThisHp);
         }
     }
     public void GetDamage(int demage)

@@ -28,7 +28,14 @@ public class InventoryItem : MonoBehaviour
         image = im;
         count.text = Quantity + "";
         Logo.sprite = image;
-
+        if(Quantity <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
     }
     public void UpdateData(int Qu, int id)
     {
@@ -36,21 +43,32 @@ public class InventoryItem : MonoBehaviour
         Quantity = Qu;
         count.text = Quantity + "";
         Logo.sprite = image;
-
+        if (Quantity <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
     }
     public void BtnClick()
     {
         Debug.Log(ID);
         Debug.Log(db.data.items.Count);
-        if (ID == 2)
+        if (ID == 2 && Quantity>0)
         {
             PC.Health(0.2f, 0f);
         }
-        if (ID == 3)
+        if (ID == 3 && Quantity > 0)
         {
             PC.Health(0f, 0.2f);
         }
-        if(ID != 1)
+        if (ID == 4 && Quantity > 0)
+        {
+            PC.Boom();
+        }
+        if (ID != 1)
         Quantity--;
         count.text = Quantity + "";
         if(Quantity<= 0)

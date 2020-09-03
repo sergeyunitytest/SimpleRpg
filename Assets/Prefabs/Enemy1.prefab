@@ -290,11 +290,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Drop:
   - id: 1
-    count: 2
+    count: 1
   - id: 2
     count: 1
   - id: 4
-    count: 5
+    count: 2
   attackDamage: 10
   Exp: 100
   Gold: 10

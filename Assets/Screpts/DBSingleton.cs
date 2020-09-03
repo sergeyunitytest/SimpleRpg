@@ -73,6 +73,6 @@ public class DropItem
     public DropItem(int ID, int Count)
     {
         id = ID;
-        count = Count;
+        count = UnityEngine.Random.Range(0, Count + 1);
     }
 }

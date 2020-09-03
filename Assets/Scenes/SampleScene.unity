@@ -1183,6 +1183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3123c9a0af0f99e4b9719d31ba4a985a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boom: {fileID: 8261718062187904878, guid: 98409326c74eb3f40a2e7e5c9f1baf14, type: 3}
   inv: {fileID: 792402070}
   DeadPanel: {fileID: 1882054962}
   GoldText: {fileID: 87560913}
@@ -3615,6 +3616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 2199538744820035855, guid: e1eb3b7dadc6cc74689e8f71cdfae2e9, type: 3}
   Pc: {fileID: 133188177}
+  II: []
 --- !u!1 &798070912
 GameObject:
   m_ObjectHideFlags: 0
@@ -3781,7 +3783,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: da2a36da4da360d40ab48fdef7b32c45, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -71162,7 +71164,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: da2a36da4da360d40ab48fdef7b32c45, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

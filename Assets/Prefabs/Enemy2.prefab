@@ -162,11 +162,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Drop:
   - id: 2
-    count: 3
+    count: 2
   - id: 3
-    count: 3
+    count: 1
   - id: 1
-    count: 4
+    count: 3
   attackDamage: 100
   Exp: 350
   Gold: 35

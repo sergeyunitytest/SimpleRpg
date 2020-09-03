@@ -326,11 +326,11 @@ MonoBehaviour:
   - id: 1
     count: 3
   - id: 2
-    count: 3
+    count: 2
   - id: 3
     count: 2
   - id: 4
-    count: 4
+    count: 3
   attackDamage: 100
   Exp: 350
   Gold: 35

@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject boom;
     public Inventory inv;
     private DBSingleton db;
     private Vector3 StartPosition;
@@ -332,6 +333,10 @@ public class PlayerController : MonoBehaviour
         db.data.x = transform.position.x;
         db.data.y = transform.position.y;
         DBSingleton.setInstance();
+    }
+    public void Boom()
+    {
+        Instantiate(boom, transform.position, Quaternion.identity);
     }
 }
 
