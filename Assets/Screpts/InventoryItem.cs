@@ -68,7 +68,15 @@ public class InventoryItem : MonoBehaviour
         {
             PC.Boom();
         }
-        if (ID != 1)
+        if (ID == 12 && Quantity > 0)
+        {
+            PC.Health(0f, 0.05f);
+        }
+        if (ID == 13 && Quantity > 0)
+        {
+            PC.Health(0.05f, 0f);
+        }
+        if (ID != 1 && ID != 11 && ID != 10 && ID != 9 && ID != 8 && ID != 7 && ID != 6 && ID != 5)
         Quantity--;
         count.text = Quantity + "";
         if(Quantity<= 0)

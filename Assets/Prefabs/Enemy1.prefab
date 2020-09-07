@@ -294,7 +294,13 @@ MonoBehaviour:
   - id: 2
     count: 1
   - id: 4
+    count: 1
+  - id: 12
     count: 2
+  - id: 11
+    count: 1
+  - id: 10
+    count: 1
   attackDamage: 10
   Exp: 100
   Gold: 10

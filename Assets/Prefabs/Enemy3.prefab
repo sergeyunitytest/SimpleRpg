@@ -331,7 +331,13 @@ MonoBehaviour:
     count: 2
   - id: 4
     count: 3
-  attackDamage: 100
+  - id: 13
+    count: 3
+  - id: 12
+    count: 3
+  - id: 7
+    count: 1
+  attackDamage: 150
   Exp: 350
   Gold: 35
   EF: {fileID: 6974546717330182192}
