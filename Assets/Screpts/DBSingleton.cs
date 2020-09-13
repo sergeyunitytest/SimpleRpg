@@ -44,6 +44,13 @@ public class DBSingleton
 }
 
 [Serializable]
+public class Recipe
+{
+    public List<int> Rets = new List<int>();
+    public int ExitItem;
+    public int CountItem;
+}
+[Serializable]
 public class Datas
 {
     public int exp;
